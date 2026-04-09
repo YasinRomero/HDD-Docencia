@@ -1,0 +1,60 @@
+<div class="delivery-container">
+  <header class="delivery-header">
+    <div class="header-info">
+      <h1>Detalles de tu entrega</h1>
+      <p>Orden #{{ order.id }}</p>
+    </div>
+    <span class="badge" [ngClass]="{'active': status === 3}">En tránsito</span>
+  </header>
+
+  <section class="tracker-section">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="(status - 1) * 33.33"></div>
+      
+      <div class="step" [class.completed]="status >= 1">
+        <div class="dot"></div>
+        <span>Recibido</span>
+      </div>
+      <div class="step" [class.completed]="status >= 2">
+        <div class="dot"></div>
+        <span>Cocina</span>
+      </div>
+      <div class="step" [class.completed]="status >= 3">
+        <div class="dot"></div>
+        <span>Ruta</span>
+      </div>
+      <div class="step" [class.completed]="status >= 4">
+        <div class="dot"></div>
+        <span>Entregado</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="order-card">
+    <h3>Tu pedido</h3>
+    <div class="item-list">
+      <div class="item" *ngFor="let item of order.items">
+        <div class="item-desc">
+          <span class="qty">{{ item.qty }}x</span>
+          <span class="name">{{ item.name }}</span>
+        </div>
+        <span class="price">${{ (item.price * item.qty).toFixed(2) }}</span>
+      </div>
+    </div>
+
+    <div class="totals">
+      <div class="row">
+        <span>Subtotal</span>
+        <span>${{ subtotal.toFixed(2) }}</span>
+      </div>
+      <div class="row">
+        <span>Envío</span>
+        <span>${{ order.deliveryFee.toFixed(2) }}</span>
+      </div>
+      <div class="row total-row">
+        <span>Total</span>
+        <span>${{ (subtotal + order.deliveryFee).toFixed(2) }}</span>
+      </div>
+    </div>
+  </section>
+</div>
